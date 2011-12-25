@@ -1,5 +1,3 @@
+require "cleaner/directory"
+require "cleaner/runner"
 require "cleaner/version"
-
-module Cleaner
-  # Your code goes here...
-end
