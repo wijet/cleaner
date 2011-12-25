@@ -17,4 +17,12 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  s.add_development_dependency "rspec"
+  # s.add_development_dependency "guard"
+  # s.add_development_dependency "guard-rspec"
+  if RUBY_PLATFORM =~ /darwin/
+    s.add_development_dependency "rb-fsevent"
+    s.add_development_dependency "ruby_gntp"
+  end
 end
