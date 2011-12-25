@@ -1,4 +1,6 @@
 require "active_support/all"
+require "filelist"
+
 require "cleaner/action"
 require "cleaner/actions/delete"
 require "cleaner/directory"
