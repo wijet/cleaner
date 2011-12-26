@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "activesupport", "2.3.14"
   s.add_dependency "filelist"
+  s.add_dependency "thor"
+  s.add_dependency "daemons"
   s.add_development_dependency "rspec"
   s.add_development_dependency "timecop"
   if RUBY_PLATFORM =~ /darwin/

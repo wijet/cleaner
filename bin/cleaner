@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require "cleaner"
+require "cleaner/cli"
+Cleaner::CLI.start
