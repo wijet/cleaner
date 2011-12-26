@@ -1,6 +1,6 @@
 module Cleaner
   class FileFilter
-    attr_reader :options, :pattern
+    attr_reader :options
 
     def initialize(options = {})
       @options = options
@@ -14,6 +14,7 @@ module Cleaner
 
     def search_pattern
       pattern = case @pattern
+        when NilClass; '*'
         when String; @pattern
         when Symbol; "*.#{@pattern}"
       end

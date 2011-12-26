@@ -5,6 +5,7 @@ describe "Cleaner: integration spec" do
     <<-EOS
 manage '~/Downloads' do
   delete :dmg, :after => 5.days
+  delete :after => 1.month
 end
 
 manage '/foo/bar' do
@@ -20,6 +21,7 @@ EOS
     example_dir '~/Downloads' do
       touch 'Firefox99.dmg', :at => 7.days.ago
       touch 'growl.dmg', :at => 2.days.ago
+      touch 'something-old', :at => 2.months.ago
       2.times { |i| touch "important-#{i}.doc" }
     end
     
@@ -44,6 +46,10 @@ EOS
     it "should leave :doc files" do
       File.exists?("important-0.doc").should be_true
       File.exists?("important-1.doc").should be_true
+    end
+    
+    it "should delete everything that is older than 1 month" do
+      
     end
   end
   

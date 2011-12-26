@@ -31,7 +31,14 @@ describe Cleaner::FileFilter do
   end
   
   describe "#search_pattern" do
-    context "when symbol is given" do
+    context "when nil given" do
+      it "should use '*' as filename pattern" do
+        filter = Cleaner::FileFilter.new(:path => '/some', :pattern => nil)
+        filter.search_pattern.should == '/some/*'
+      end
+    end
+    
+    context "when symbol given" do
       it "should be used as file extension" do
         filter.search_pattern.should == '/foo/*.zip'
       end

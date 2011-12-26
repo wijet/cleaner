@@ -15,8 +15,12 @@ module Cleaner
 
     def method_missing(method, *args, &block)
       action_class = construct_action_class(method)
+      # FIXME: refactor this argument parsing
       options = args.last.is_a?(Hash) ? args.last : {}
-      options = options.merge(:pattern => args.first, :path => path)
+      options = options.merge(
+        :pattern => args.first.is_a?(Hash) ? nil : args.first, 
+        :path => path
+      )
       filter = FileFilter.new(options)
       action = action_class.new(filter.filterize, options)
       action.execute

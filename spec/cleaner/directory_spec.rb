@@ -5,6 +5,7 @@ describe Cleaner::Directory do
     Proc.new do
       delete :dmg, :after => 10.days
       delete :download
+      delete :after => 100.days
     end
   end
   
@@ -63,6 +64,17 @@ describe Cleaner::Directory do
         :after => 10.days
       )
       directory.clean
+    end
+    
+    context "when no pattern is given" do
+      it "should initialize action with nil as pattern" do
+        Cleaner::Actions::Delete.should_receive(:new).with(%w(file1), 
+          :pattern => nil, 
+          :path => '~/downloads', 
+          :after => 100.days
+        )
+        directory.clean        
+      end
     end
     
     it "should execute action" do
