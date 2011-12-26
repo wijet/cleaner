@@ -3,7 +3,8 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 describe Cleaner::Directory do
   let(:block) do
     Proc.new do
-      delete :dmg
+      delete :dmg, :after => 10.days
+      delete :download
     end
   end
   
@@ -49,15 +50,19 @@ describe Cleaner::Directory do
     it "should initialize FileFilter object" do
       Cleaner::FileFilter.should_receive(:new).with(
         :pattern => :dmg,
-        :path => '~/downloads'
+        :path => '~/downloads',
+        :after => 10.days
       )
       directory.clean
     end
     
     it "should initialize action class with files and options" do
       Cleaner::Actions::Delete.should_receive(:new).with(%w(file1), 
-        :pattern => :dmg, :path => '~/downloads')
-        directory.clean
+        :pattern => :dmg, 
+        :path => '~/downloads', 
+        :after => 10.days
+      )
+      directory.clean
     end
     
     it "should execute action" do

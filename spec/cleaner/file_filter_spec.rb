@@ -3,23 +3,30 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 describe Cleaner::FileFilter do
   before do
     example_dir '/foo' do
-      2.times { |i| touch "b-#{i}.zip" }
+      touch 'b-0.zip' 
+      touch 'b-1.zip', :at => 2.days.ago
       touch 'cc.txt'
     end
   end
   
-  let(:options) { {:path => '/foo', :pattern => :zip} }
-  let(:filter) { Cleaner::FileFilter.new(options) }
+  def filter(options = {})
+    options = {:path => '/foo', :pattern => :zip}.merge(options)
+    Cleaner::FileFilter.new(options)
+  end
   
   describe "being initialize" do
     it "should have options" do
-      filter.options.should == options
+      filter.options.should == {:path => '/foo', :pattern => :zip}
     end
   end
   
   describe "#filterize" do    
-    it "should return filtered files" do
+    it "should return files filtered by name" do
       filter.filterize.should == %w(/foo/b-0.zip /foo/b-1.zip)
+    end
+    
+    it "should return files filtered by :after option" do
+      filter(:after => 1.day).filterize.should == %w(/foo/b-1.zip)
     end
   end
   
