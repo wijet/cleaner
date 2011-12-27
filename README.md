@@ -1,5 +1,36 @@
-How DSL can look like
+# Cleaner #
 
+Tool for automatic management of directories on your disk with simple DSL.
+
+---
+
+
+## Installation ##
+
+    gem install cleaner
+
+
+## Usage ##
+
+Generate sample configuration file (~/.cleaner.rb)
+
+    cleaner init
+	
+Run cleaner in the background. By default it will run every 1 hour.
+
+	cleaner start
+	
+You can specify how cleaning interval with "rails like" syntax: 20.minutes, 4.hours, 1.day
+
+	cleaner start 4.hours
+	
+Stop cleaner daemon
+
+	cleaner stop
+	
+## Example configuration file ##
+
+```ruby
 manage '~/Downloads' do
   delete :zip, :after => 2.days
 
@@ -27,3 +58,4 @@ manage '~/Downloads' do
   # 
   # archive :pdf, :with => :zip, :to => 'pdfs'
 end
+```
