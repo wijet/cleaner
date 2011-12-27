@@ -1,32 +1,32 @@
-# Cleaner #
+# Cleaner
 ---
 
 Tool for automatic management of directories on your disk with simple DSL.
 
-## Installation ##
+## Installation
 
-    gem install cleaner
+    $ gem install cleaner
 
 
-## Usage ##
+## Usage
 
 Generate sample configuration file (~/.cleaner.rb)
 
-    cleaner init
+    $ cleaner init
 	
 Run cleaner in the background. By default it will run every 1 hour.
 
-	cleaner start
+	$ cleaner start
 	
 You can specify how cleaning interval with "rails like" syntax: 20.minutes, 4.hours, 1.day
 
-	cleaner start 4.hours
+	$ cleaner start 4.hours
 	
 Stop cleaner daemon
 
-	cleaner stop
+	$ cleaner stop
 	
-## Example configuration file ##
+## Example configuration file
 
 ```ruby
 manage '~/Downloads' do
@@ -42,3 +42,19 @@ manage '~/Downloads' do
   delete :after => 1.month
 end
 ```
+
+## Contributions
+
+To fetch & test the library for development, do:
+
+    $ git clone https://github.com/wijet/cleaner
+    $ cd cleaner
+    $ bundle
+    $ bundle exec rspec
+
+If you wont to contribute, please:
+
+  * Fork the project.
+  * Make your feature addition or bug fix.
+  * Add tests for it. This is important so I don't break it in a future version unintentionally.
+  * Send me a pull request on Github.
