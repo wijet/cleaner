@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency "thor"
   s.add_dependency "daemons"
   s.add_development_dependency "rspec"
-  s.add_development_dependency "timecop"
+  s.add_development_dependency "simplecov"
   if RUBY_PLATFORM =~ /darwin/
     s.add_development_dependency "rb-fsevent"
     s.add_development_dependency "ruby_gntp"
