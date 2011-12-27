@@ -6,6 +6,7 @@ describe "Cleaner: integration spec" do
 manage '~/Downloads' do
   move :avi, :to => '~/Movies'
   delete :dmg, :after => 5.days
+  delete %w(rar gz)
   delete :after => 1.month
 end
 
@@ -24,6 +25,8 @@ EOS
       touch 'growl.dmg', :at => 2.days.ago
       touch 'something-old', :at => 2.months.ago
       touch 'lol-cat.avi'
+      touch 'something.rar'
+      touch 'another-thing.gz'
       2.times { |i| touch "important-#{i}.doc" }
     end
     
@@ -58,6 +61,11 @@ EOS
       file = File.expand_path("~/Movies/lol-cat.avi")
       File.exists?(file).should be_true
       File.exists?("lol-cat.avi").should be_false
+    end
+    
+    it "shoud remove rar and gz files given as Array of extensions" do
+      File.exists?("something.rar").should be_false
+      File.exists?("another-thing.gz").should be_false
     end
   end
   

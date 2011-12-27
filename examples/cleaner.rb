@@ -1,8 +1,8 @@
 manage '~/Downloads' do
-  # Move avi's and mp3's to right places
+  # Move avi's and audio files to right places
   #
   # move :avi, :to => '~/Movies/inbox'
-  # move :mp3, :to => '~/Music/inbox'
+  # move %w(mp3 ogg), :to => '~/Music/inbox'
   
   # You've probably installed it already
   #

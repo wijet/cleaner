@@ -50,5 +50,12 @@ describe Cleaner::FileFilter do
         filter.search_pattern.should == '/some/foo.*'
       end
     end
+    
+    context "when Array given" do
+      it "should use every element as file extension pattern" do
+        filter = Cleaner::FileFilter.new(:path => '/some', :pattern => %w(pdf doc))
+        filter.search_pattern.should == %w(/some/*.pdf /some/*.doc)
+      end
+    end
   end
 end

@@ -13,12 +13,12 @@ module Cleaner
     end
 
     def search_pattern
-      pattern = case @pattern
-        when NilClass; '*'
-        when String; @pattern
-        when Symbol; "*.#{@pattern}"
+      case @pattern
+        when NilClass; "#{path}/*"
+        when String; "#{path}/#{@pattern}"
+        when Symbol; "#{path}/*.#{@pattern}"
+        when Array; @pattern.map { |ext| "#{path}/*.#{ext}" }
       end
-      File.join(expanded_path, pattern)
     end
 
     def filter_by_options(files)
@@ -33,7 +33,7 @@ module Cleaner
 
     protected
 
-    def expanded_path
+    def path
       File.expand_path(options[:path])
     end
 

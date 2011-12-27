@@ -30,30 +30,15 @@ Stop cleaner daemon
 
 ```ruby
 manage '~/Downloads' do
-  delete :zip, :after => 2.days
-
+  # Move avi's and audio files to right places
+  move :avi, :to => '~/Movies/inbox'
+  move %w(mp3 ogg), :to => '~/Music/inbox'
+  
+  # You've probably installed it already
   delete :dmg, :after => 10.hours
-  delete %w(dmg mpkg torrent), :after => 10.hours
-
-  delete '*.download', :after => 5.hours
-
-  # remove zip files if unzipped version exists
-  delete :zip, :if => lambda { |file| exists?(file) }
-	
-  move :doc, :to => '~/Documents'
-
-  # 
-  # move :pdf, :to => 'pdfs' do
-  #   colour :red
-  #   keywords %(presentation pdf)
-  # end
-  # 
-  # colour :pdf, :with => :red
-  # 
-  # copy :pdf, :to => 'somewhere' do |file|
-  #   notify "#{file} has been copied!"
-  # end
-  # 
-  # archive :pdf, :with => :zip, :to => 'pdfs'
+  
+  # Delete everything older than 1 month.
+  # Was here for so long? Doesn't deserve to exist!
+  delete :after => 1.month
 end
 ```
