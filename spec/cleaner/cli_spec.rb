@@ -14,6 +14,13 @@ describe Cleaner::CLI do
     @app = mock(:start => nil)
   end
 
+  describe "#init" do
+    it "should copy sample config to ~/.cleaner.rb" do
+      cli.should_receive("copy_file").with("cleaner.rb", "~/.cleaner.rb")
+      cli.init
+    end
+  end
+
   describe "#start" do
     before do
       cli.stub(:daemon).and_return(@app)

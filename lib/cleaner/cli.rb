@@ -3,8 +3,15 @@ require "daemons"
 
 module Cleaner
   class CLI < Thor
+    include Thor::Actions
     attr_reader :interval
-    
+    source_root("#{File.dirname(__FILE__)}/../../examples")
+
+    desc 'init', 'Create sample config file in ~/.cleaner.rb'
+    def init
+      copy_file "cleaner.rb", "~/.cleaner.rb"
+    end
+
     desc 'start [INTERVAL]', 'Start cleaner in background. It cleans directories every 1 hour'
     def start(interval = "1.hour")
       @interval = eval(interval)
