@@ -1,9 +1,7 @@
 # Cleaner #
-
-Tool for automatic management of directories on your disk with simple DSL.
-
 ---
 
+Tool for automatic management of directories on your disk with simple DSL.
 
 ## Installation ##
 
