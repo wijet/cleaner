@@ -3,14 +3,17 @@ require "daemons"
 
 module Cleaner
   class CLI < Thor
-    desc 'start', 'Start cleaner in background. It cleans directories every 1 hour'
-    def start
-      daemon_application.start
+    attr_reader :interval
+    
+    desc 'start [INTERVAL]', 'Start cleaner in background. It cleans directories every 1 hour'
+    def start(interval = "1.hour")
+      @interval = eval(interval)
+      daemon.start
     end
     
     desc 'stop', 'Stop cleaner in background'
     def stop
-      daemon_application.stop
+      daemon.stop
     end
     
     desc 'cleanup', 'Run cleaner ad hoc'
@@ -19,8 +22,7 @@ module Cleaner
     end
     
     no_tasks do
-      # FIXME: Rename to just daemon
-      def daemon_application
+      def daemon
         group = Daemons::ApplicationGroup.new('cleaner', daemon_options)
         group.new_application(daemon_options)
       end
@@ -38,7 +40,7 @@ module Cleaner
         Proc.new do
           loop do
             run_cleaner
-            sleep 1.hour
+            sleep interval
           end
         end
       end

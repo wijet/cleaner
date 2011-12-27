@@ -11,25 +11,39 @@ describe Cleaner::CLI do
     File.open(@config_path, "w") do |file|
       file << "manage('~/Downloads') {}"
     end
-    @app = mock
+    @app = mock(:start => nil)
   end
-  
+
   describe "#start" do
-    it "should invoke start on daemon application" do
+    before do
+      cli.stub(:daemon).and_return(@app)
+    end
+    
+    it "should invoke start on daemon" do
       @app.should_receive(:start)
-      cli.should_receive(:daemon_application).and_return(@app)
+      cli.should_receive(:daemon).and_return(@app)
       cli.start
     end
+
+    it "should assign and eval time interval" do
+      cli.start
+      cli.interval.should == 1.hour
+    end
+
+    it "should accept custom interval" do
+      cli.start("20.minutes")
+      cli.interval.should == 20.minutes
+    end
   end
-  
+
   describe "#stop" do
-    it "should invoke stop on daemon application" do
+    it "should invoke stop on daemon" do
       @app.should_receive(:stop)
-      cli.should_receive(:daemon_application).and_return(@app)
+      cli.should_receive(:daemon).and_return(@app)
       cli.stop
     end  
   end
-  
+
   describe "#cleanup" do
     it "should invoke run_cleaner" do
       cli.should_receive(:run_cleaner)
@@ -54,7 +68,7 @@ describe Cleaner::CLI do
     end
   end
   
-  describe "#daemon_application" do
+  describe "#daemon" do
     it "should construct daemon application" do
       proc = Proc.new {}
       cli.stub(:runner_proc).and_return(proc)
@@ -62,10 +76,10 @@ describe Cleaner::CLI do
       options = {:mode => :proc, :proc => proc, :dir_mode => :normal, :dir => "/tmp"}
       group.should_receive(:new_application).with(options)
       Daemons::ApplicationGroup.should_receive(:new).with('cleaner', options).and_return(group)
-      cli.daemon_application
+      cli.daemon
     end
   end
-  
+
   describe "#load_rules" do
     it "should load config file" do
       cli.load_rules.should == rules
