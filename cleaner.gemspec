@@ -7,9 +7,12 @@ Gem::Specification.new do |s|
   s.version     = Cleaner::VERSION
   s.authors     = ["Mariusz Pietrzyk"]
   s.email       = ["wijet@wijet.pl"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "http://github.com/wijet/cleaner"
+  s.summary     = %q{Tool for cleaning up your directories with friendly DSL}
+  s.description = <<desc
+  Cleaner is a small tool which helps you keep your directories clean.
+  With simple DSL you define set of rules, which are then periodically executed against specified directory.
+desc
 
   s.rubyforge_project = "cleaner"
 
