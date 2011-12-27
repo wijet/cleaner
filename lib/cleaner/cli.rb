@@ -19,6 +19,7 @@ module Cleaner
     end
     
     no_tasks do
+      # FIXME: Rename to just daemon
       def daemon_application
         group = Daemons::ApplicationGroup.new('cleaner', daemon_options)
         group.new_application(daemon_options)
@@ -37,7 +38,7 @@ module Cleaner
         Proc.new do
           loop do
             run_cleaner
-            sleep 1.minute
+            sleep 1.hour
           end
         end
       end

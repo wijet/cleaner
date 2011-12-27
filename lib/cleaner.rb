@@ -3,6 +3,7 @@ require "filelist"
 
 require "cleaner/action"
 require "cleaner/actions/delete"
+require "cleaner/actions/move"
 require "cleaner/directory"
 require "cleaner/runner"
 require "cleaner/file_filter"
