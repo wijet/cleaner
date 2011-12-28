@@ -27,6 +27,7 @@ desc
   s.add_dependency "daemons"
   s.add_development_dependency "rspec"
   s.add_development_dependency "simplecov"
+  s.add_development_dependency "timecop"
   if RUBY_PLATFORM =~ /darwin/
     s.add_development_dependency "rb-fsevent"
     s.add_development_dependency "ruby_gntp"

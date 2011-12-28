@@ -21,9 +21,9 @@ EOS
 
   before do
     example_dir '~/Downloads' do
-      touch 'Firefox99.dmg', :at => 7.days.ago
-      touch 'growl.dmg', :at => 2.days.ago
-      touch 'something-old', :at => 2.months.ago
+      touch 'Firefox99.dmg', :ctime => 7.days.ago
+      touch 'growl.dmg', :ctime => 2.days.ago
+      touch 'something-old', :ctime => 2.months.ago
       touch 'lol-cat.avi'
       touch 'something.rar'
       touch 'another-thing.gz'

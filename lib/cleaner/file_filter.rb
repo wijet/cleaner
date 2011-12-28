@@ -24,7 +24,7 @@ module Cleaner
     def filter_by_options(files)
       files.select do |file|
         if options.has_key?(:after)
-          next if File.mtime(file) > options[:after].ago
+          next if File.ctime(file) > options[:after].ago
         end
 
         true

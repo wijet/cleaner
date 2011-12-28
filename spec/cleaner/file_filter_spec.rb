@@ -3,8 +3,8 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 describe Cleaner::FileFilter do
   before do
     example_dir '/foo' do
-      touch 'b-0.zip' 
-      touch 'b-1.zip', :at => 2.days.ago
+      touch 'b-0.zip', :mtime => 10.days.ago
+      touch 'b-1.zip', :ctime => 2.days.ago
       touch 'cc.txt'
     end
   end
@@ -25,7 +25,7 @@ describe Cleaner::FileFilter do
       filter.filterize.should == %w(/foo/b-0.zip /foo/b-1.zip)
     end
     
-    it "should return files filtered by :after option" do
+    it "should return files filtered by :after option (using change time)" do
       filter(:after => 1.day).filterize.should == %w(/foo/b-1.zip)
     end
   end
