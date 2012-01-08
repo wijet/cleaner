@@ -11,6 +11,7 @@ manage '~/Downloads' do
 end
 
 manage '/foo/bar' do
+  copy %w(pdf), :to => '~/Documents'
   delete "abc.*"
 end
 
@@ -31,7 +32,7 @@ EOS
     end
     
     example_dir '/foo/bar' do
-      %w(abc.txt abc.mp3 ddd.doc).each { |name| touch name }
+      %w(abc.txt abc.mp3 ddd.doc doc.pdf).each { |name| touch name }
     end    
     
     runner.start
@@ -79,6 +80,10 @@ EOS
     
     it "should leave not matching abc.*" do
       File.exists?("ddd.doc").should be_true      
+    end
+
+    it "should copy file to destination" do
+      File.exists?(File.expand_path("~/Documents/doc.pdf")).should be_true
     end
   end
 end

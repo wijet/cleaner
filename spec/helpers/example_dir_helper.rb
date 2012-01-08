@@ -15,5 +15,6 @@ module ExampleDirHelper
       FileUtils.touch(name)
     end
     File.utime(options[:atime], options[:mtime], name)
+    File.open(name, "w") { |f| f << options[:content] } if options[:content]
   end
 end
