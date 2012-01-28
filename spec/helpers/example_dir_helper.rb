@@ -4,7 +4,7 @@ module ExampleDirHelper
   def example_dir(name, &block)
     path = File.expand_path(name)
     FileUtils.mkdir_p(path)
-    Dir.chdir(path) { block.call }
+    Dir.chdir(path) { block.call } if block
   end
 
   def touch(name, options = {})
