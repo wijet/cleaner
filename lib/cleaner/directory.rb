@@ -1,12 +1,12 @@
 module Cleaner
   class Directory
     attr_reader :path, :block
-    
+
     def initialize(path, block)
       @path = path
       @block = block
     end
-    
+
     def clean
       instance_eval(&block)
     end
@@ -18,7 +18,7 @@ module Cleaner
       # FIXME: refactor this argument parsing
       options = args.last.is_a?(Hash) ? args.last : {}
       options = options.merge(
-        :pattern => args.first.is_a?(Hash) ? nil : args.first, 
+        :pattern => args.first.is_a?(Hash) ? nil : args.first,
         :path => path
       )
       filter = FileFilter.new(options)

@@ -8,19 +8,19 @@ describe Cleaner::Directory do
       delete :after => 100.days
     end
   end
-  
+
   let(:directory) { Cleaner::Directory.new('~/downloads', block)}
-  
+
   describe "being initialize" do
     it "should have path" do
       directory.path.should == '~/downloads'
     end
-    
+
     it "should have block" do
       directory.block.should == block
     end
   end
-  
+
   describe "#clean" do
     it "should eval block in its own context" do
       block = Proc.new {}
@@ -37,7 +37,7 @@ describe Cleaner::Directory do
       @action = mock(:execute => true)
       Cleaner::Actions::Delete.stub(:new).and_return(@action)
     end
-    
+
     context "on unknown action" do
       it "should raise Action::UnknownActionException" do
         lambda {
@@ -47,7 +47,7 @@ describe Cleaner::Directory do
         }.should raise_error(Cleaner::Action::UnknownActionException, "Action 'fooooo' is unknown")
       end
     end
-    
+
     it "should initialize FileFilter object" do
       Cleaner::FileFilter.should_receive(:new).with(
         :pattern => :dmg,
@@ -56,27 +56,27 @@ describe Cleaner::Directory do
       )
       directory.clean
     end
-    
+
     it "should initialize action class with files and options" do
-      Cleaner::Actions::Delete.should_receive(:new).with(%w(file1), 
-        :pattern => :dmg, 
-        :path => '~/downloads', 
+      Cleaner::Actions::Delete.should_receive(:new).with(%w(file1),
+        :pattern => :dmg,
+        :path => '~/downloads',
         :after => 10.days
       )
       directory.clean
     end
-    
+
     context "when no pattern is given" do
       it "should initialize action with nil as pattern" do
-        Cleaner::Actions::Delete.should_receive(:new).with(%w(file1), 
-          :pattern => nil, 
-          :path => '~/downloads', 
+        Cleaner::Actions::Delete.should_receive(:new).with(%w(file1),
+          :pattern => nil,
+          :path => '~/downloads',
           :after => 100.days
         )
-        directory.clean        
+        directory.clean
       end
     end
-    
+
     it "should execute action" do
       @action.should_receive(:execute)
       directory.clean
