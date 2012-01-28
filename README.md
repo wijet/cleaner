@@ -34,7 +34,7 @@ Run cleaner in the background. By default it will run every 1 hour.
 
 	$ cleaner start
 
-You can specify how cleaning interval with "rails like" syntax: 20.minutes, 4.hours, 1.day
+You can specify cleaning interval with "rails like" syntax: 20.minutes, 4.hours, 1.day
 
 	$ cleaner start 4.hours
 
