@@ -15,6 +15,9 @@ manage '~/Downloads' do
   move :avi, :to => '~/Movies/inbox'
   move %w(mp3 ogg), :to => '~/Music/inbox'
 
+  # Remove zip files if file without zip extension exists (uncompressed files)
+  delete :zip, :if => proc { |file| File.exists?(file.path_without_ext) }
+
   # Move all VAT invoices to a special place
   move :pdf, :if => proc { |file| file.name =~ /VAT/ }, :to => '~/Documents/invoices'
 

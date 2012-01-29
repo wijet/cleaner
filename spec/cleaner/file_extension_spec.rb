@@ -14,4 +14,10 @@ describe Cleaner::FileExtension do
       file.name.should == "bar.txt"
     end
   end
+
+  describe "#path_without_ext" do
+    it "should return file path name without file extension" do
+      file.path_without_ext.should == "/foo/bar"
+    end
+  end
 end

@@ -5,6 +5,7 @@ describe "Cleaner: integration spec" do
     manage '~/Downloads' do
       delete :if => proc { |file| file.name =~ /secret-\d\.txt/ }
       move :avi, :to => '~/Movies'
+      delete :zip, :if => proc { |file| File.exists?(file.path_without_ext) }
       delete :dmg, :after => 5.days
       delete %w(rar gz)
       delete :after => 1.month
@@ -27,6 +28,9 @@ describe "Cleaner: integration spec" do
       touch 'lol-cat.avi'
       touch 'something.rar'
       touch 'another-thing.gz'
+      touch 'thing.dmg.zip'
+      touch 'thing.dmg'
+      touch 'thing2.zip'
       2.times do |i|
         touch "important-#{i}.doc"
         touch "secret-#{i}.txt"
@@ -74,6 +78,13 @@ describe "Cleaner: integration spec" do
     it "should delete files by :if condition" do
       File.exists?("secret-1.txt").should be_false
       File.exists?("secret-2.txt").should be_false
+    end
+
+    it "should delete zip archives if uncompressed file exist" do
+      # File thing.dmg exists
+      File.exists?("thing.dmg.zip").should be_false
+      # File thing2 doesn't exist
+      File.exists?("thing2.zip").should be_true
     end
   end
 

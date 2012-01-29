@@ -6,5 +6,10 @@ module Cleaner
     def name
       File.basename(path)
     end
+
+    def path_without_ext
+      pathname = Pathname.new(path)
+      pathname.sub_ext("").to_s
+    end
   end
 end
