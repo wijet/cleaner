@@ -119,7 +119,7 @@ To fetch & test the library for development, do:
     $ bundle
     $ bundle exec rspec
 
-If you wont to contribute, please:
+If you want to contribute, please:
 
   * Fork the project.
   * Make your feature addition or bug fix.
