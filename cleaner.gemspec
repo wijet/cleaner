@@ -26,6 +26,7 @@ desc
   s.add_dependency "thor"
   s.add_dependency "daemons"
   s.add_development_dependency "rspec"
+  s.add_development_dependency "rake"
   s.add_development_dependency "simplecov"
   s.add_development_dependency "timecop"
   if RUBY_PLATFORM =~ /darwin/
