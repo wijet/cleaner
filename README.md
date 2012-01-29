@@ -84,8 +84,8 @@ module Cleaner
       	:green  => 6
       }
       def execute
-        files.each do |path|
-          code = COLORS[options[:color]]
+      	code = COLORS[options[:color]]
+        files.each do |path|  
           script = %Q{
             tell application \\"Finder\\" to set label index of file (POSIX file \\"#{path}\\") to #{code}
           }
