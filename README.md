@@ -48,6 +48,68 @@ Stop cleaner daemon
 
 	$ cleaner stop
 
+
+## Available actions
+
+  - Deleting files
+    ```
+    delete :zip
+    ```
+  - Moving files
+    ```
+    move :pdf, :to => '~/Documents/pdfs'
+    ```
+  - Copying files
+    ```
+    copy :mp3, :to => '~/Documents/audio'
+    ```
+
+
+## Writing own actions
+
+New actions can be added easily. All you need to do is implement #execute method.
+Useful methods when implementing own actions
+
+  - #files - array of filtered file paths
+  - #options - hash of options passed to action
+
+```ruby
+# Sample action which sets color label on files in OS X
+module Cleaner
+  module Actions
+    class Label < Action
+      COLORS = {
+      	:red 	=> 2,
+      	:yellow => 3,
+      	:green  => 6
+      }
+      def execute
+        files.each do |path|
+          code = COLORS[options[:color]]
+          script = %Q{
+            tell application \\"Finder\\" to set label index of file (POSIX file \\"#{path}\\") to #{code}
+          }
+          `osascript -e "#{script}"`
+        end
+      end
+    end
+  end
+end
+```
+
+### Using custom action
+Require action file, and use it as any other action, you can pass any condition to it.
+
+```ruby
+require 'label.rb'
+manage '/add-more-colors-to-your-files' do
+  # all avi files are labeled with green color
+  label :avi, :color => :green
+  # all files bigger than 100 megabytes are labeled with red color
+  label :color => :red, :if => proc { |file| file.size > 100.megabytes }
+end
+```
+
 ## Contributions
 
 To fetch & test the library for development, do:
