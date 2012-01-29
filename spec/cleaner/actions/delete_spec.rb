@@ -18,6 +18,13 @@ describe Cleaner::Actions::Delete do
     File.exists?('bar').should be_false
   end
 
+  # FakeFS doesn't support proper behavior for FileUtils#rm_rf
+  # it's just an alias for FileUtils#rm
+  it "should use rm_rf for deleting" do
+    FileUtils.should_receive(:rm_rf)
+    delete.execute
+  end
+
   it "should leave other files" do
     delete.execute
     File.exists?('b.txt').should be_true
