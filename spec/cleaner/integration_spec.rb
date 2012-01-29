@@ -1,21 +1,20 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe "Cleaner: integration spec" do
-  let(:config) do
-    <<-EOS
-manage '~/Downloads' do
-  move :avi, :to => '~/Movies'
-  delete :dmg, :after => 5.days
-  delete %w(rar gz)
-  delete :after => 1.month
-end
+  let(:config) do %q{
+    manage '~/Downloads' do
+      delete :if => proc { |file| file.name =~ /secret-\d\.txt/ }
+      move :avi, :to => '~/Movies'
+      delete :dmg, :after => 5.days
+      delete %w(rar gz)
+      delete :after => 1.month
+    end
 
-manage '/foo/bar' do
-  copy %w(pdf), :to => '~/Documents'
-  delete "abc.*"
-end
-
-EOS
+    manage '/foo/bar' do
+      copy %w(pdf), :to => '~/Documents'
+      delete "abc.*"
+    end
+  }
   end
 
   let(:runner) { Cleaner::Runner.new(config) }
@@ -28,7 +27,10 @@ EOS
       touch 'lol-cat.avi'
       touch 'something.rar'
       touch 'another-thing.gz'
-      2.times { |i| touch "important-#{i}.doc" }
+      2.times do |i|
+        touch "important-#{i}.doc"
+        touch "secret-#{i}.txt"
+      end
     end
 
     example_dir '/foo/bar' do
@@ -67,6 +69,11 @@ EOS
     it "shoud remove rar and gz files given as Array of extensions" do
       File.exists?("something.rar").should be_false
       File.exists?("another-thing.gz").should be_false
+    end
+
+    it "should delete files by :if condition" do
+      File.exists?("secret-1.txt").should be_false
+      File.exists?("secret-2.txt").should be_false
     end
   end
 
