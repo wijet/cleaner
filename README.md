@@ -1,4 +1,4 @@
-# Cleaner
+# Cleaner [![Build Status](https://secure.travis-ci.org/wijet/cleaner.png)](http://travis-ci.org/wijet/cleaner)
 ---
 
 Tool for automatic management of directories on your disk with simple DSL.
