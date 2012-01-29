@@ -30,6 +30,12 @@ module Cleaner
       run_cleaner
     end
 
+    map %w(-v --version) => :version
+    desc 'version', 'Show cleaner version'
+    def version
+      say "cleaner version #{VERSION}"
+    end
+
     no_tasks do
       def daemon
         group = Daemons::ApplicationGroup.new('cleaner', daemon_options)

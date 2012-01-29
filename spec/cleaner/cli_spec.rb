@@ -75,6 +75,13 @@ describe Cleaner::CLI do
     end
   end
 
+  describe "#version" do
+    it "should display cleaner version" do
+      $stdout.should_receive(:puts).with("cleaner version #{Cleaner::VERSION}")
+      cli.version
+    end
+  end
+
   describe "#daemon" do
     it "should construct daemon application" do
       proc = Proc.new {}
