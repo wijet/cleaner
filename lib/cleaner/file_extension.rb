@@ -8,8 +8,11 @@ module Cleaner
     end
 
     def path_without_ext
-      pathname = Pathname.new(path)
-      pathname.sub_ext("").to_s
+      File.join(File.dirname(path), name_without_ext)
+    end
+
+    def name_without_ext
+      name.chomp(File.extname(name))
     end
   end
 end
