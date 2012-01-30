@@ -38,15 +38,15 @@ Generate sample configuration file (~/.cleaner.rb)
 
 Run cleaner in the background. By default it will run every 1 hour.
 
-	$ cleaner start
+    $ cleaner start
 
 You can specify cleaning interval with "rails like" syntax: 20.minutes, 4.hours, 1.day
 
-	$ cleaner start 4.hours
+    $ cleaner start 4.hours
 
 Stop cleaner daemon
 
-	$ cleaner stop
+    $ cleaner stop
 
 
 ## Available actions
@@ -68,7 +68,8 @@ Stop cleaner daemon
 ## Writing own actions
 
 New actions can be added easily. All you need to do is implement #execute method.
-Useful methods when implementing own actions
+
+Useful methods when implementing own actions:
 
   - #files - array of filtered file paths
   - #options - hash of options passed to action
