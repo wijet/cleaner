@@ -15,6 +15,9 @@ manage '~/Downloads' do
   move :avi, :to => '~/Movies/inbox'
   move %w(mp3 ogg), :to => '~/Music/inbox'
 
+  # label all files bigger than 100MB with red color (OS X only)
+  label :color => :red, :if => proc { |file| file.size > 100.megabytes }
+
   # Remove zip files if file without zip extension exists (uncompressed files)
   delete :zip, :if => proc { |file| File.exists?(file.path_without_ext) }
 
@@ -63,6 +66,10 @@ Stop cleaner daemon
     ```
     copy :mp3, :to => '~/Documents/audio'
     ```
+  - Labeling files with colors (OS X only). Available colors: :white, :orange, :red, :yellow, :blue, :purple, :green, :gray
+    ```
+    label :txt, :color => :blue
+    ```
 
 
 ## Writing own actions
@@ -75,21 +82,24 @@ Useful methods when implementing own actions:
   - #options - hash of options passed to action
 
 ```ruby
-# Sample action which sets color label on files in OS X
+# Here as example is label action which sets color label on files on OS X
 module Cleaner
   module Actions
     class Label < Action
       COLORS = {
-      	:red 	=> 2,
-      	:yellow => 3,
-      	:green  => 6
+        :white  => 0,
+        :orange => 1,
+        :red    => 2,
+        :yellow => 3,
+        :blue   => 4,
+        :purple => 5,
+        :green  => 6,
+        :gray   => 7,
       }
       def execute
-      	code = COLORS[options[:color]]
-        files.each do |path|  
-          script = %Q{
-            tell application \\"Finder\\" to set label index of file (POSIX file \\"#{path}\\") to #{code}
-          }
+        code = COLORS[options[:color]]
+        files.each do |path|
+          script = %Q{tell application \\"Finder\\" to set label index of file (POSIX file \\"#{path}\\") to #{code}}
           `osascript -e "#{script}"`
         end
       end
@@ -99,7 +109,7 @@ end
 ```
 
 ### Using custom action
-Require action file, and use it as any other action, you can pass any condition to it.
+Require action in your config file and use it as any other action.
 
 ```ruby
 require 'label.rb'
