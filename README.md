@@ -55,19 +55,26 @@ Stop cleaner daemon
 ## Available actions
 
   - Deleting files
-    ```
+
+    ```ruby
     delete :zip
     ```
+
   - Moving files
-    ```
+
+    ```ruby
     move :pdf, :to => '~/Documents/pdfs'
     ```
+
   - Copying files
-    ```
+
+    ```ruby
     copy :mp3, :to => '~/Documents/audio'
     ```
+
   - Labeling files with colors (OS X only). Available colors: :white, :orange, :red, :yellow, :blue, :purple, :green, :gray
-    ```
+
+    ```ruby
     label :txt, :color => :blue
     ```
 
@@ -76,19 +83,26 @@ Stop cleaner daemon
   Conditions are used for more accurate files matching.
 
   - :after - Matches files created given period time ago
-    ```
+
+    ```ruby
     :after => 2.days
     ```
+
   - :if - Matches file for which block returns true. File object is passed to the block.
-    ```
+
+    ```ruby
     :if => proc { |file| file.name =~ /foo/ }
     ```
+
   - :smaller_than - Matches files which are smaller than the given value
-    ```
+
+    ```ruby
     :smaller_than => 10.megabytes
     ```
+
   - :bigger_than - Matches files which are bigger than the given value
-    ```
+
+    ```ruby
     :bigger_than => 1.megabyte
     ```
 
