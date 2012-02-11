@@ -6,6 +6,7 @@ describe Cleaner::FileFilter do
       touch 'b-0.zip', :mtime => 10.days.ago
       touch 'b-1.zip', :ctime => 2.days.ago
       touch 'cc.txt', :ctime => 3.days.ago
+      touch 'big.txt', :content => "abc" * 10
     end
   end
 
@@ -33,7 +34,7 @@ describe Cleaner::FileFilter do
       filter(
         :if => proc { |file| file.name =~ /\w\w\.txt$/ },
         :pattern => nil
-      ).filterize.should == %w(/foo/cc.txt)
+      ).filterize.should == %w(/foo/big.txt /foo/cc.txt)
     end
 
     it "should return files filtered by two conditions :if and :after" do
@@ -42,6 +43,13 @@ describe Cleaner::FileFilter do
         :if => proc { |file| file.name =~ /c/ },
         :pattern => nil
       ).filterize.should == %w(/foo/cc.txt)
+    end
+
+    it "should return files filtered by :smaller_than condition" do
+      filter(
+        :smaller_than => 10.bytes,
+        :pattern => nil
+      ).filterize.should == %w(/foo/b-0.zip /foo/b-1.zip /foo/cc.txt)
     end
   end
 
