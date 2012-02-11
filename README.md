@@ -1,7 +1,7 @@
 # Cleaner [![Build Status](https://secure.travis-ci.org/wijet/cleaner.png)](http://travis-ci.org/wijet/cleaner)
 ---
 
-Tool for automatic management of directories on your disk with simple DSL.
+Tool for automatic management of directories on your disk with simple DSL. Inspired by [Hazel](http://www.noodlesoft.com/hazel.php) app.
 
 ## Installation
 
