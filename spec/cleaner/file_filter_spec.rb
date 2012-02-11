@@ -51,6 +51,13 @@ describe Cleaner::FileFilter do
         :pattern => nil
       ).filterize.should == %w(/foo/b-0.zip /foo/b-1.zip /foo/cc.txt)
     end
+
+    it "should return files filtered by :bigger_than condition" do
+      filter(
+        :bigger_than => 20.bytes,
+        :pattern => nil
+      ).filterize.should == %w(/foo/big.txt)
+    end
   end
 
   describe "#search_pattern" do

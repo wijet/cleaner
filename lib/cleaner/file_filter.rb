@@ -1,6 +1,6 @@
 module Cleaner
   class FileFilter
-    CONDITIONS = [:after, :if, :smaller_than]
+    CONDITIONS = [:after, :if, :smaller_than, :bigger_than]
 
     attr_reader :options
 
@@ -30,7 +30,8 @@ module Cleaner
         [
           after_condition?(path),
           if_condition?(path),
-          smaller_than_condition?(path)
+          smaller_than_condition?(path),
+          bigger_than_condition?(path)
         ].all?
       end
     end
@@ -54,6 +55,11 @@ module Cleaner
     def smaller_than_condition?(path)
       return true unless options.has_key?(:smaller_than)
       File.size(path) < options[:smaller_than]
+    end
+
+    def bigger_than_condition?(path)
+      return true unless options.has_key?(:bigger_than)
+      File.size(path) > options[:bigger_than]
     end
 
     def path
