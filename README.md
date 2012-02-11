@@ -16,7 +16,7 @@ manage '~/Downloads' do
   move %w(mp3 ogg), :to => '~/Music/inbox'
 
   # label all files bigger than 100MB with red color (OS X only)
-  label :color => :red, :if => proc { |file| file.size > 100.megabytes }
+  label :color => :red, :bigger_than => 100.megabytes
 
   # Remove zip files if file without zip extension exists (uncompressed files)
   delete :zip, :if => proc { |file| File.exists?(file.path_without_ext) }
@@ -71,6 +71,26 @@ Stop cleaner daemon
     label :txt, :color => :blue
     ```
 
+## Available conditions
+
+  Conditions are used for more accurate files matching.
+
+  - :after - Matches files created given period time ago
+    ```
+    :after => 2.days
+    ```
+  - :if - Matches file for which block returns true. File object is passed to the block.
+    ```
+    :if => proc { |file| file.name =~ /foo/ }
+    ```
+  - :smaller_than - Matches files which are smaller than the given value
+    ```
+    :smaller_than => 10.megabytes
+    ```
+  - :bigger_than - Matches files which are bigger than the given value
+    ```
+    :bigger_than => 1.megabyte
+    ```
 
 ## Writing own actions
 
