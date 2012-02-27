@@ -106,6 +106,10 @@ Stop cleaner daemon
     :bigger_than => 1.megabyte
     ```
 
+## Third party actions
+
+  * [Subtitles](https://gist.github.com/1859117) - Fetching polish subtitles for movies 
+
 ## Writing own actions
 
 New actions can be added easily. All you need to do is implement #execute method.
